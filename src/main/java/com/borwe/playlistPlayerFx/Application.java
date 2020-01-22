@@ -1,4 +1,4 @@
-package com.borwe.playerfx;
+package com.borwe.playlistPlayerFx;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,6 +8,7 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
+		System.out.println("YOLO BITCHES");
 	}
 
 }
