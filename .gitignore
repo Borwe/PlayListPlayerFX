@@ -31,3 +31,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### for Derby DB ###
+data/
+derby.log
