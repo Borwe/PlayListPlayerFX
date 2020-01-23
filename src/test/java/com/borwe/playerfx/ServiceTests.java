@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import io.reactivex.schedulers.Schedulers;
+
 import com.borwe.playlistPlayerFx.springServices.FilesHandler;
 
 
@@ -24,14 +26,14 @@ public class ServiceTests {
 	
 	@Test
 	public void testGettingFolders() {
-		int size=handler.getFilesInDirectory(new File("./").getAbsolutePath()).cacheWithInitialCapacity(10)
-		.map(file->{
-			assertNotNull(file);
-			log.info("location: "+file.getAbsolutePath());
-			System.out.println("location: "+file.getAbsolutePath());
-			return file;
-		}).toList().blockingGet().size();
-		System.out.println("\nSIZE: "+size+"\n");
+		long size=0;
+        size=handler.getFilesInDirectory(new File("./").getAbsolutePath()).cacheWithInitialCapacity(10)
+            .subscribeOn(Schedulers.io()).count().blockingGet();
+        //test showing the files gotten
+        handler.getFilesInDirectory(new File("./").getAbsolutePath()).toList().blockingGet()
+            .forEach(f->{
+                System.out.println("FILE: "+f.getAbsolutePath());    
+            });
 		assertTrue(size>0);
 	}
 }

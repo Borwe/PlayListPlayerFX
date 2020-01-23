@@ -35,3 +35,6 @@ out/
 ### for Derby DB ###
 data/
 derby.log
+
+##other##
+tags

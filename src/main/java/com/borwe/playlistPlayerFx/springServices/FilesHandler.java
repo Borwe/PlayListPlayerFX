@@ -1,14 +1,17 @@
 package com.borwe.playlistPlayerFx.springServices;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.springframework.stereotype.Service;
 
+import io.reactivex.Emitter;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.schedulers.Schedulers;
 
 @Service
 public class FilesHandler {
@@ -25,42 +28,39 @@ public class FilesHandler {
 			 * 		else recall loop with folder passed as location keep going back 
 	 */
 	public Observable<File> getFilesInDirectory(String location){
-		return Observable.fromArray(location).map(loc->{
-			return new File(loc);
-		})
-		.filter(file->(file.exists())?true:false)
-		.flatMap(file->{
-			Callable<ObservableSource<File>> recursive;
-			recursive=()->{
-				
-				if(file.isDirectory()==false && file.isFile()==true) {
-					//if file then so return it
-					return (emit->{
-						emit.onNext(file);
-						emit.onComplete();
-					});
-				}else if(file.isDirectory()==false){
-					//we reach here if the file is a directory;
-					//open the folder
-					return (emit->{
-						Observable.fromArray(file.listFiles()).map(f->getFilesInDirectory(f.getAbsolutePath()))
-						.forEach(observables->{
-							observables.forEach(f->{
-								emit.onNext(f);
-							});
-						});
-						emit.onComplete();
-					});
-				}else {
-					return (emit->{
-						emit.onComplete();
-					});
-				}
-			};
-			//use executer to execute this
-			ExecutorService service=Executors.newSingleThreadExecutor();
-			var fut=service.submit(recursive);
-			return fut.get();
-		});
+        return Observable.create(emitter->{
+            //check that file exists, if so continue, otherwise end it here
+            File file=new File(location);
+            if(file.exists()){
+                fileEmmitting(emitter,file);
+            }
+            
+            emitter.onComplete();
+        });
 	}
+
+    
+    /**
+     * Check that file exists:
+     *  -If So, then check if it's a folder:
+     *      -If so then get it's children
+     *      -Recursivly call this same function on it's children
+     *  -If so, but not folder:
+     *      -Emit files using emmitter
+     *  -If not, then do nothing
+     */
+    private void fileEmmitting(Emitter emitter,File file){
+        if(file!=null && file.exists()==true){
+            //check if folder
+            if(file.isDirectory()==true){
+               //get children
+                Observable.fromArray(file.listFiles()).subscribeOn(Schedulers.io())
+                    .blockingSubscribe(f->{
+                        emitter.onNext(f);    
+                    });
+            }else if(file.isFile()){
+                emitter.onNext(file);
+            }
+        }
+    }
 }
