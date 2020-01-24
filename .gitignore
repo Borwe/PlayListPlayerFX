@@ -38,3 +38,6 @@ derby.log
 
 ##other##
 tags
+
+##ignore eclipse files ##
+.att*
