@@ -1,0 +1,56 @@
+package com.borwe.playlistPlayerFx.springServices;
+
+import com.borwe.playlistPlayerFx.data.Type;
+import com.borwe.playlistPlayerFx.data.repos.TypeRepo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.objenesis.instantiator.annotations.Typology;
+import org.springframework.stereotype.Service;
+
+import io.reactivex.Observable;
+import lombok.ToString;
+
+@Service
+@ToString
+public class TypeService{
+    
+	@Autowired
+    private TypeRepo typeRepo;
+    
+    @Autowired
+    private ApplicationContext context;
+    
+    private synchronized TypeRepo gettypeRepo() {
+    	if(typeRepo==null) {
+    		typeRepo=context.getBean(TypeRepo.class);
+    	}
+    	return typeRepo;
+    }
+
+    /**
+     * Check that there atleast 3 types in the db,
+     * if not then create them, save them, then return
+     * the saved objects from the database
+     * @return
+     */
+    public Observable<Type> getAlltypes(){
+		if(typeRepo.count()==0) {
+		   //then create the objects here of the types
+		   //mp4,3gp, and mkv
+		   Type mp4=context.getBean(Type.class);
+		   Type g3p=context.getBean(Type.class);
+		   Type mkv=context.getBean(Type.class);
+		   mp4.setType("mp4");
+		   g3p.setType("3gp");
+		   mkv.setType("mkv");
+		   
+		   //now save this objects
+		   typeRepo.save(mp4);
+		   typeRepo.save(g3p);
+		   typeRepo.save(mkv);
+		}
+		
+		return Observable.fromIterable(typeRepo.findAll());
+    }
+}
