@@ -6,8 +6,7 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.borwe.playlistPlayerFx.fx.MainFXController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -20,7 +19,7 @@
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem id="update_a_playlist_menu" mnemonicParsing="false" text="Update a Playlist" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem mnemonicParsing="false" text="Exit" />
+              <MenuItem id="menu_exit" mnemonicParsing="false" onAction="#closeAppliction" text="Exit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
