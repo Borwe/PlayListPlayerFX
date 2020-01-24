@@ -24,7 +24,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-                  <MenuItem id="menu_docs" mnemonicParsing="false" text="Docs" />
+                  <MenuItem id="menu_docs" fx:id="menu_help" mnemonicParsing="false" onAction="#showHelpDocs" text="Docs" />
                   <SeparatorMenuItem mnemonicParsing="false" />
               <MenuItem id="about_menu" mnemonicParsing="false" text="About" />
             </items>

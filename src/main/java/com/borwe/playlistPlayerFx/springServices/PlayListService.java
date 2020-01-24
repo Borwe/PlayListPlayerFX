@@ -22,7 +22,7 @@ public class PlayListService {
 	
 	public io.reactivex.Single<Boolean> thereIsPlayList(){
 		return getPlayLists().count().map(count->{
-			return (count>0)?false:true;
+			return (count<=0)?false:true;
 		});
 	}
 }
