@@ -19,4 +19,10 @@ public class PlayListService {
 	public Observable<PlayList> getPlayLists(){
 		return Observable.fromIterable(playListRepo.findAll());
 	}
+	
+	public io.reactivex.Single<Boolean> thereIsPlayList(){
+		return getPlayLists().count().map(count->{
+			return (count>0)?false:true;
+		});
+	}
 }

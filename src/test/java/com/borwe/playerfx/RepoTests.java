@@ -35,5 +35,10 @@ public class RepoTests{
 		count=playListService.getPlayLists().count().blockingGet();
 		//make sure that count now should not be null
 		Assertions.assertTrue(count!=null);
+		
+		Boolean exists=null;
+		exists=playListService.thereIsPlayList().blockingGet();
+		//make sure exists is not null
+		Assertions.assertTrue(exists!=null);
 	}
 }
