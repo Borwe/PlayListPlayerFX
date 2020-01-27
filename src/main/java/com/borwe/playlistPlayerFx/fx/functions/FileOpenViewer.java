@@ -8,7 +8,6 @@ import com.borwe.playlistPlayerFx.springServices.FilesHandler;
 import com.borwe.playlistPlayerFx.springServices.TypeService;
 
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
 public class FileOpenViewer<T extends Window> implements Consumer<T>{
