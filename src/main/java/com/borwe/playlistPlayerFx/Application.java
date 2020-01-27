@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 
 import com.borwe.playlistPlayerFx.fx.MainFXController;
+import com.borwe.playlistPlayerFx.fx.functions.GenerateHelperView;
 import com.borwe.playlistPlayerFx.springConfigs.MainConfig;
 import com.borwe.playlistPlayerFx.springServices.PlayListService;
 
@@ -47,11 +48,10 @@ public class Application extends javafx.application.Application{
 		 */
 		primaryStage.setOnShown(event->{
 			var playlistService=Application.getApplicationContext().getBean(PlayListService.class);
-			System.out.println("FUCKING WHAT THE HELL?");
 			playlistService.thereIsPlayList().map(val->{
 				if(val==false) {
 					Thread.sleep(1000);
-					MainFXController.generateHelpDocsView();
+				    new GenerateHelperView<Void>().accept(null);
 				}
 				return val;
 			}).observeOn(Schedulers.computation())

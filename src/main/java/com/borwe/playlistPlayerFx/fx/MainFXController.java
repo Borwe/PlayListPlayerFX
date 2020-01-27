@@ -6,16 +6,14 @@ import java.util.ResourceBundle;
 import com.borwe.playlistPlayerFx.Application;
 import com.borwe.playlistPlayerFx.HelpView;
 import com.borwe.playlistPlayerFx.Observers.DoNothingObserver;
+import com.borwe.playlistPlayerFx.fx.functions.GenerateHelperView;
 import com.borwe.playlistPlayerFx.springServices.PlayListService;
 
 import io.reactivex.schedulers.Schedulers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class MainFXController implements Initializable{
 
@@ -29,18 +27,8 @@ public class MainFXController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 	}
 	
-	public static void generateHelpDocsView() throws Exception {
-		
-		Stage stage=new Stage();
-		stage.initOwner(Application.getMainWindow());
-		stage.initModality(Modality.APPLICATION_MODAL);
-		HelpView help=new HelpView();
-		help.start(stage);
-		System.out.println("SHIT!!!");
-	}
-	
 	public void showHelpDocs(ActionEvent event) throws Exception {
-		generateHelpDocsView();
+        new GenerateHelperView<ActionEvent>().accept(event);
 	}
 	
 	//close the all application
