@@ -53,10 +53,15 @@ public class FilesHandler {
         if(file!=null && file.exists()==true){
             //check if folder
             if(file.isDirectory()==true){
+                System.out.println("Recursive Directory!!!");
                //get children
                 Observable.fromArray(file.listFiles()).subscribeOn(Schedulers.io())
                     .blockingSubscribe(f->{
-                        emitter.onNext(f);    
+                        if(f.isDirectory()){
+                            fileEmmitting(emitter,f);
+                        }else if(f!=null && f.isFile()){
+                            emitter.onNext(f);    
+                        }
                     });
             }else if(file.isFile()){
                 emitter.onNext(file);
