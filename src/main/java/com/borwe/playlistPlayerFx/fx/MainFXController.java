@@ -27,22 +27,9 @@ public class MainFXController implements Initializable{
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		var playlistService=Application.getApplicationContext().getBean(PlayListService.class);
-		playlistService.thereIsPlayList().map(val->{
-			if(val==false) {
-				Thread.sleep(1000);
-				generateHelpDocsView();
-			}
-			return val;
-		}).observeOn(Schedulers.computation())
-			.subscribe(val->{
-				System.out.println("SHIT:   "+val);
-			},err->{
-				System.err.println("ERROR: "+err);
-			});
 	}
 	
-	private void generateHelpDocsView() throws Exception {
+	public static void generateHelpDocsView() throws Exception {
 		
 		Stage stage=new Stage();
 		stage.initOwner(Application.getMainWindow());
