@@ -12,7 +12,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem id="open_playlist" mnemonicParsing="false" text="Open/Create Playlist from Folder" />
+                  <MenuItem id="open_playlist" mnemonicParsing="false" onAction="#selectFile" text="Open/Create Playlist from Folder" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem id="delete_playlist_menu" mnemonicParsing="false" text="Delete a Playlist" />
                   <MenuItem id="delete_playlist_with_file_menu" mnemonicParsing="false" text="Delete a Playlist With Files" />
