@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.borwe.playlistPlayerFx.data.MultiMedia;
 import com.borwe.playlistPlayerFx.data.Type;
 
 /**
@@ -26,5 +27,11 @@ public class DataConfigs {
 	Type generateType() {
 		Type type=new Type();
 		return type;
+	}
+	
+	@Bean
+	@Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	MultiMedia generateMedia() {
+		return new MultiMedia();
 	}
 }

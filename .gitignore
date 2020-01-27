@@ -33,7 +33,7 @@ out/
 .vscode/
 
 ### for Derby DB ###
-data/
+/data/
 derby.log
 
 ##other##
