@@ -22,6 +22,12 @@
               <MenuItem id="menu_exit" mnemonicParsing="false" onAction="#closeAppliction" text="Exit" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Options">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Add MultiMedia Types" />
+                  <MenuItem mnemonicParsing="false" text="Show MultiMedia Types" />
+               </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
                   <MenuItem id="menu_docs" fx:id="menu_help" mnemonicParsing="false" onAction="#showHelpDocs" text="Docs" />
