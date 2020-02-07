@@ -9,13 +9,10 @@ public class HelpView {
 	
 	public void start(Stage primaryStage) throws Exception {
 		
-		//Load the file
 		Parent parent=FXMLLoader.load(this.getClass().getResource("/fxml/helpDisplay.fxml"));
-		//generate scene 
-		Scene scene=new Scene(parent);
-		//add it to Stage
-		primaryStage.setScene(scene);
 		
+		Scene scene=new Scene(parent);
+		primaryStage.setScene(scene);
 		
 		//show the help section
 		primaryStage.showAndWait();

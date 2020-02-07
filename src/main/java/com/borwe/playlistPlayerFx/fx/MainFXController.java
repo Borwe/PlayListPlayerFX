@@ -8,6 +8,7 @@ import com.borwe.playlistPlayerFx.HelpView;
 import com.borwe.playlistPlayerFx.Observers.DoNothingObserver;
 import com.borwe.playlistPlayerFx.fx.functions.FileOpenViewer;
 import com.borwe.playlistPlayerFx.fx.functions.GenerateHelperView;
+import com.borwe.playlistPlayerFx.fx.functions.GenerateTypesView;
 import com.borwe.playlistPlayerFx.springServices.PlayListService;
 
 import io.reactivex.schedulers.Schedulers;
@@ -31,6 +32,10 @@ public class MainFXController implements Initializable{
 	
 	public void showHelpDocs(ActionEvent event) throws Exception {
         new GenerateHelperView<ActionEvent>().accept(event);
+	}
+	
+	public void showTypesView(ActionEvent event) {
+		new GenerateTypesView<ActionEvent>().accept(event);
 	}
 
     public void selectFile(ActionEvent event){

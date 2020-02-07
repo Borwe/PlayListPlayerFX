@@ -24,8 +24,8 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Options">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Add MultiMedia Types" />
-                  <MenuItem mnemonicParsing="false" text="Show MultiMedia Types" />
+                  <MenuItem mnemonicParsing="false" onAction="#showTypesView" text="Add MultiMedia Types" />
+                  <MenuItem mnemonicParsing="false" onAction="#showTypesView" text="Show MultiMedia Types" />
                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">
