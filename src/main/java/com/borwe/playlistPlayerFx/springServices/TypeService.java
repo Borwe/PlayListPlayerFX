@@ -37,22 +37,30 @@ public class TypeService{
      */
     public Observable<Type> getAlltypes(){
 		if(typeRepo.count()==0) {
-		   //then create the objects here of the types
-		   //mp4,3gp, and mkv
-		   Type mp4=context.getBean(Type.class);
-		   Type g3p=context.getBean(Type.class);
-		   Type mkv=context.getBean(Type.class);
-		   mp4.setType("mp4");
-		   g3p.setType("3gp");
-		   mkv.setType("mkv");
-		   
-		   //now save this objects
-		   typeRepo.save(mp4);
-		   typeRepo.save(g3p);
-		   typeRepo.save(mkv);
 		}
 		
-		return Observable.defer(()->Observable.fromIterable(typeRepo.findAll()));
+		return Observable.defer(()->Observable.just(typeRepo.count())
+				.map(count->{
+					if(count==0) {
+					   //then create the objects here of the types
+					   //mp4,3gp, and mkv
+					   Type mp4=context.getBean(Type.class);
+					   Type g3p=context.getBean(Type.class);
+					   Type mkv=context.getBean(Type.class);
+					   mp4.setType("mp4");
+					   g3p.setType("3gp");
+					   mkv.setType("mkv");
+					   
+					   //now save this objects
+					   typeRepo.save(mp4);
+					   typeRepo.save(g3p);
+					   typeRepo.save(mkv);
+					}
+					
+					return typeRepo.findAll();
+				}).flatMap(typesIterable->{
+					return Observable.fromIterable(typesIterable);
+				}));
     }
     
     /**
