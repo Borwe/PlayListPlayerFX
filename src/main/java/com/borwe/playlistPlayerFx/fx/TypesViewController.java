@@ -8,6 +8,8 @@ import com.borwe.playlistPlayerFx.springServices.TypeService;
 
 import io.reactivex.Single;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -26,6 +28,9 @@ public class TypesViewController implements Initializable{
 	@FXML
 	Button exitTypesView;
 	
+	@FXML
+	Button removeType;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		loaded=true;
@@ -39,6 +44,23 @@ public class TypesViewController implements Initializable{
 					Thread.sleep(500);
 				}
 				typesList.getItems().addAll(list);
+				
+				//set listener to enable disable removeType button
+				var removeEnabler=new EventHandler<Event>() {
+
+					@Override
+					public void handle(Event arg0) {
+						// TODO Auto-generated method stub
+						var selection=typesList.getSelectionModel();
+						if(selection.isEmpty()==true) {
+							removeType.setDisable(true);
+						}else {
+							removeType.setDisable(false);
+						}
+					}
+				};
+				typesList.setOnMouseClicked(removeEnabler);
+				typesList.setOnKeyPressed(removeEnabler);
 				return typesList;
 			});
 		
