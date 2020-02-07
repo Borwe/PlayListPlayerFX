@@ -16,6 +16,8 @@ public class TypesView {
 		
 		Scene scene=new Scene(parent);
 		primaryStage.setScene(scene);
+		primaryStage.setMinWidth(300);
+		primaryStage.setMinHeight(300);
 
 		primaryStage.showAndWait();
 	}

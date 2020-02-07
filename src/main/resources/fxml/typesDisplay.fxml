@@ -6,7 +6,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.borwe.playlistPlayerFx.fx.TypesViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="250.0" minWidth="300.0" prefHeight="250.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.borwe.playlistPlayerFx.fx.TypesViewController">
    <center>
       <ListView fx:id="typesList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -18,7 +18,7 @@
         <buttons>
           <Button fx:id="exitTypesView" cancelButton="true" mnemonicParsing="false" onAction="#exitTypes" text="Exit" />
             <Button fx:id="addType" defaultButton="true" mnemonicParsing="false" text="Add" />
-            <Button fx:id="removeType" disable="true" mnemonicParsing="false" text="Remove" />
+            <Button fx:id="removeType" disable="true" mnemonicParsing="false" onAction="#removeTypeItem" text="Remove" />
         </buttons>
          <BorderPane.margin>
             <Insets right="3.0" />

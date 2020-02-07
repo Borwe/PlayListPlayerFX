@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.borwe.playlistPlayerFx.Application;
+import com.borwe.playlistPlayerFx.data.Type;
 import com.borwe.playlistPlayerFx.springServices.TypeService;
 
 import io.reactivex.Single;
@@ -44,7 +45,11 @@ public class TypesViewController implements Initializable{
 					Thread.sleep(500);
 				}
 				typesList.getItems().addAll(list);
+				typesList.refresh();
+				return typesList;
+			});
 				
+		fillInListViewObservable.map(typeList->{
 				//set listener to enable disable removeType button
 				var removeEnabler=new EventHandler<Event>() {
 
@@ -62,12 +67,30 @@ public class TypesViewController implements Initializable{
 				typesList.setOnMouseClicked(removeEnabler);
 				typesList.setOnKeyPressed(removeEnabler);
 				return typesList;
-			});
-		
-		fillInListViewObservable.subscribe();
+		}).subscribe();
 	}
 
 	public void exitTypes(ActionEvent event) {
 		((Stage)exitTypesView.getScene().getWindow()).close();
+	}
+	
+	public void removeTypeItem(ActionEvent event) {
+		//get the type which was selected
+		var getType=Single.create(emitter->{
+			emitter.onSuccess(typesList.getSelectionModel().getSelectedItem());
+		}).map(item->{
+			return new Type(0L, (String)item);
+		});
+		Application.getApplicationContext().getBean(TypeService.class)
+			.removeTypes(getType).subscribe(success->{
+				if(success==true) {
+					//clear list
+					typesList.getItems().clear();
+					fillInListViewObservable.subscribe();
+				}
+			},error->{
+				System.err.println(error.getMessage());
+				System.err.println(error.getCause());
+			});
 	}
 }

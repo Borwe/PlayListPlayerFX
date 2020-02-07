@@ -5,10 +5,11 @@ import com.borwe.playlistPlayerFx.data.repos.TypeRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.objenesis.instantiator.annotations.Typology;
 import org.springframework.stereotype.Service;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Single;
 import lombok.ToString;
 
 @Service
@@ -51,6 +52,27 @@ public class TypeService{
 		   typeRepo.save(mkv);
 		}
 		
-		return Observable.fromIterable(typeRepo.findAll());
+		return Observable.defer(()->Observable.fromIterable(typeRepo.findAll()));
+    }
+    
+    /**
+     * 
+     * @param typesObservable
+     * @return
+     * Used for removing Types from the database that match the ones passed 
+     * if not in database no need to remove something that doesn't exist to
+     * start with,
+     * returns a single true if object existed and is deleted, false otherwise
+     */
+    public Single<Boolean> removeTypes(Single<Type> typesObservable){
+    	return typesObservable.map(typeObject->{
+    		var types=typeRepo.findByType(typeObject.getType());
+    		if(types.size()>0) {
+    			typeRepo.deleteById(types.get(0).getId());
+    			return true;
+    		}else {
+    			return false;
+    		}
+    	});
     }
 }
