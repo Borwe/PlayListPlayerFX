@@ -36,8 +36,6 @@ public class TypeService{
      * @return
      */
     public Observable<Type> getAlltypes(){
-		if(typeRepo.count()==0) {
-		}
 		
 		return Observable.defer(()->Observable.just(typeRepo.count())
 				.map(count->{
