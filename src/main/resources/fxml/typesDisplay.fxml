@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.borwe.playlistPlayerFx.fx.TypesViewController">
+   <center>
+      <ListView fx:id="typesList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </BorderPane.margin></ListView>
+   </center>
+   <bottom>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <buttons>
+          <Button fx:id="exitTypesView" cancelButton="true" mnemonicParsing="false" text="Exit" />
+            <Button fx:id="addType" defaultButton="true" mnemonicParsing="false" text="Add" />
+            <Button fx:id="removeType" disable="true" mnemonicParsing="false" text="Remove" />
+        </buttons>
+         <BorderPane.margin>
+            <Insets right="3.0" />
+         </BorderPane.margin>
+      </ButtonBar>
+   </bottom>
+</BorderPane>
