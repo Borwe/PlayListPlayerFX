@@ -62,6 +62,25 @@ public class TypeService{
     }
     
     /**
+     * Used for adding Types to the database
+     * reactively
+     * @param type
+     * @return
+     */
+    public Single<Boolean> addType(Type type){
+    	return Single.just(type).map(t->{
+    		//if type exists, no need of saving just return true
+    		if(typeRepo.findByType(t.getType()).size()>0) {
+    			return false;
+    		}
+    		
+    		//otherwise means type not in database, so try save it
+    		typeRepo.save(t);
+    		return true;
+    	});
+    }
+    
+    /**
      * 
      * @param typesObservable
      * @return

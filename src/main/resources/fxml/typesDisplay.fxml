@@ -17,7 +17,7 @@
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
           <Button fx:id="exitTypesView" cancelButton="true" mnemonicParsing="false" onAction="#exitTypes" text="Exit" />
-            <Button fx:id="addType" defaultButton="true" mnemonicParsing="false" text="Add" />
+            <Button fx:id="addType" defaultButton="true" mnemonicParsing="false" onAction="#addType" text="Add" />
             <Button fx:id="removeType" disable="true" mnemonicParsing="false" onAction="#removeTypeItem" text="Remove" />
         </buttons>
          <BorderPane.margin>
