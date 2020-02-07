@@ -7,9 +7,12 @@ import com.borwe.playlistPlayerFx.Application;
 import com.borwe.playlistPlayerFx.springServices.TypeService;
 
 import io.reactivex.Single;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
 public class TypesViewController implements Initializable{
 
@@ -19,6 +22,9 @@ public class TypesViewController implements Initializable{
 	
 	@FXML
 	ListView<String> typesList;
+	
+	@FXML
+	Button exitTypesView;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -39,4 +45,7 @@ public class TypesViewController implements Initializable{
 		fillInListViewObservable.subscribe();
 	}
 
+	public void exitTypes(ActionEvent event) {
+		((Stage)exitTypesView.getScene().getWindow()).close();
+	}
 }
