@@ -790,6 +790,82 @@ to database<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><
             </y:ShapeNode>
           </data>
         </node>
+        <node id="n5::n22">
+          <data key="d5"/>
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="30.0" width="30.0" x="788.5582048344085" y="597.9991935194969"/>
+              <y:Fill color="#FFCC00" transparent="false"/>
+              <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="13.0" y="13.0">
+                <y:LabelModel>
+                  <y:SmartNodeLabelModel distance="4.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="star6"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="n5::n23">
+          <data key="d5"/>
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="30.0" width="30.0" x="970.3033080580738" y="597.9991935194969"/>
+              <y:Fill color="#FFCC00" transparent="false"/>
+              <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="13.0" y="13.0">
+                <y:LabelModel>
+                  <y:SmartNodeLabelModel distance="4.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="star6"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="n5::n24">
+          <data key="d5"/>
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="30.0" width="30.0" x="892.1109432912342" y="504.75318134715053"/>
+              <y:Fill color="#FFCC00" transparent="false"/>
+              <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="13.0" y="13.0">
+                <y:LabelModel>
+                  <y:SmartNodeLabelModel distance="4.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="star6"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="n5::n25">
+          <data key="d5"/>
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="30.0" width="30.0" x="616.7516095585056" y="597.9991935194969"/>
+              <y:Fill color="#FFCC00" transparent="false"/>
+              <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="13.0" y="13.0">
+                <y:LabelModel>
+                  <y:SmartNodeLabelModel distance="4.0"/>
+                </y:LabelModel>
+                <y:ModelParameter>
+                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+                </y:ModelParameter>
+              </y:NodeLabel>
+              <y:Shape type="star6"/>
+            </y:ShapeNode>
+          </data>
+        </node>
       </graph>
     </node>
     <node id="n6" yfiles.foldertype="group">
@@ -2083,7 +2159,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n20">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1476.3094657541506" y="425.9728588965161"/>
@@ -2102,7 +2177,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n21">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1460.3419844358425" y="572.7760416666667"/>
@@ -2121,7 +2195,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n22">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1590.3153994707568" y="584.7794911463225"/>
@@ -2140,7 +2213,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n23">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1667.7991401299107" y="670.1119791666666"/>
@@ -2159,7 +2231,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n24">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1281.3419844358427" y="587.0810365412474"/>
@@ -2178,7 +2249,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n25">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1460.3419844358425" y="682.6666666666667"/>
@@ -2197,7 +2267,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n26">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1544.2050549044304" y="761.4427083333333"/>
@@ -2216,7 +2285,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n27">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1306.341984435843" y="670.1119791666667"/>
@@ -2235,7 +2303,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n28">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1111.3419844358427" y="686.0474885230108"/>
@@ -2254,7 +2321,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n29">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1144.8869288849892" y="844.4479166666666"/>
@@ -2273,7 +2339,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n30">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-987.2310693326453" y="876.390625"/>
@@ -2292,7 +2357,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n31">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-970.3419844358427" y="962.0026041666667"/>
@@ -2311,7 +2375,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n32">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1290.4528995390401" y="876.3333333333333"/>
@@ -2330,7 +2393,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n33">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1273.341984435843" y="975.4198967494194"/>
@@ -2349,7 +2411,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n34">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1461.34942068714" y="935.1428523382365"/>
@@ -2368,7 +2429,6 @@ already exists<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelMode
           </data>
         </node>
         <node id="n12::n35">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1609.3153994707568" y="989.2291691189679"/>
@@ -2603,7 +2663,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
           </data>
         </node>
         <node id="n13::n16">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-2202.6099727580213" y="423.0282677787527"/>
@@ -2622,7 +2681,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
           </data>
         </node>
         <node id="n13::n17">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-2347.607332638279" y="434.5359947533764"/>
@@ -2641,7 +2699,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
           </data>
         </node>
         <node id="n13::n18">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-2294.5828391969753" y="520.2954431361936"/>
@@ -2660,7 +2717,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
           </data>
         </node>
         <node id="n13::n19">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-2202.6099727580213" y="551.9148098945377"/>
@@ -2679,7 +2735,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
           </data>
         </node>
         <node id="n13::n20">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-2345.305787243354" y="664.6905342458494"/>
@@ -2698,7 +2753,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
           </data>
         </node>
         <node id="n13::n21">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-2283.1936397667814" y="741.6789071057206"/>
@@ -2717,7 +2771,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
           </data>
         </node>
         <node id="n13::n22">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-2183.9597347373483" y="634.7704441118279"/>
@@ -2736,7 +2789,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
           </data>
         </node>
         <node id="n13::n23">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-2043.9597347373483" y="656.6351253636128"/>
@@ -2755,7 +2807,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
           </data>
         </node>
         <node id="n13::n24">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-1998.9232053071823" y="724.5307145138923"/>
@@ -2774,7 +2825,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
           </data>
         </node>
         <node id="n13::n25">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-2008.6076512648328" y="797.4458350447744"/>
@@ -2793,7 +2843,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
           </data>
         </node>
         <node id="n13::n26">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-2008.6076512648326" y="881.6789071057203"/>
@@ -2812,7 +2861,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
           </data>
         </node>
         <node id="n13::n27">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-2020.1583457556708" y="428.9119791666667"/>
@@ -2831,7 +2879,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
           </data>
         </node>
         <node id="n13::n28">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="-2066.3583457556706" y="520.2954431361937"/>
@@ -2852,7 +2899,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
       </graph>
     </node>
     <node id="n14">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="30.0" width="30.0" x="-1564.3419844358427" y="235.1081776447312"/>
@@ -2871,7 +2917,6 @@ the change<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y
       </data>
     </node>
     <node id="n15">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="30.0" width="30.0" x="-2088.3957825348816" y="228.20354145995697"/>

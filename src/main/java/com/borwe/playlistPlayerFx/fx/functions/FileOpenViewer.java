@@ -7,7 +7,10 @@ import com.borwe.playlistPlayerFx.Application;
 import com.borwe.playlistPlayerFx.springServices.FilesHandler;
 import com.borwe.playlistPlayerFx.springServices.TypeService;
 
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
 import javafx.stage.Window;
 
 public class FileOpenViewer<T extends Window> implements Consumer<T>{
@@ -42,11 +45,26 @@ public class FileOpenViewer<T extends Window> implements Consumer<T>{
         //check that file exists, otherwise user didn't select any
         if(file!=null && file.exists() && file.isDirectory()){
             //continue here to parse files in the folder
-            Application.getApplicationContext().getBean(FilesHandler.class)
-                .getFilesInDirectory(file.getAbsolutePath())
-                .forEach(f->{
-                    System.out.println("FILE : "+f.getAbsolutePath());
-                });
+            var filesObserver=Application.getApplicationContext().getBean(FilesHandler.class)
+                .getFilesInDirectory(file.getAbsolutePath());
+            
+            //check if files is empty, if so stop and don't go ahead, show error message
+            if(filesObserver.isEmpty().blockingGet()) {
+            	ButtonType okButton=new ButtonType("OK");
+            	Dialog<Void> noFilesDialog=new Dialog<Void>();
+            	noFilesDialog.getDialogPane().getButtonTypes().add(okButton);
+            	noFilesDialog.setTitle("Error");
+            	noFilesDialog.getDialogPane().setHeaderText("Sorry");
+            	noFilesDialog.getDialogPane().setContentText("Please select another folder with actual files");
+            	noFilesDialog.initModality(Modality.APPLICATION_MODAL);
+            	noFilesDialog.showAndWait();
+            	accept(t);
+            	return;
+            }else {
+            	//meaning that files actually exist, then go ahead and filter only
+            	//files that have a specific extention ending that the user has
+            	//listed for support
+            }
         }else{
             //meaning user didn't select anything here
             System.out.println("Wow, you didn't select shit!'");
