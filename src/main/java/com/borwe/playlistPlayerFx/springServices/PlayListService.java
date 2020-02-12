@@ -7,6 +7,7 @@ import com.borwe.playlistPlayerFx.data.PlayList;
 import com.borwe.playlistPlayerFx.data.repos.PlayListRepo;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import lombok.ToString;
 
 @Service
@@ -18,6 +19,10 @@ public class PlayListService {
 	
 	public Observable<PlayList> getPlayLists(){
 		return Observable.fromIterable(playListRepo.findAll());
+	}
+	
+	public Single<PlayList> savePlayList(PlayList playList){
+		return Single.defer(()->Single.just(playList).map(pList->playListRepo.save(pList)));
 	}
 	
 	public io.reactivex.Single<Boolean> thereIsPlayList(){

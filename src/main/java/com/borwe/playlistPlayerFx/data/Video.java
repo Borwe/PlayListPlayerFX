@@ -25,13 +25,13 @@ public class Video {
 	/** 
 	 * Video can have a type, but not a must
 	 */
-	@OneToOne(optional = true)
+	@OneToOne
 	private Type type;
 	
 	/**
 	 * Each video is a type of multimedia
 	 */
-	@OneToOne(optional = true)
+	@OneToOne
 	private MultiMedia multiMedia;
 	
 	/**

@@ -9,7 +9,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.borwe.playlistPlayerFx.data.MultiMedia;
+import com.borwe.playlistPlayerFx.data.PlayList;
 import com.borwe.playlistPlayerFx.data.Type;
+import com.borwe.playlistPlayerFx.data.Video;
 
 /**
  * 
@@ -24,14 +26,26 @@ public class DataConfigs {
 	
 	@Bean
 	@Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	Type generateType() {
+	public Type generateType() {
 		Type type=new Type();
 		return type;
 	}
 	
 	@Bean
 	@Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	MultiMedia generateMedia() {
+	public MultiMedia generateMedia() {
 		return new MultiMedia();
+	}
+	
+	@Bean
+	@Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public Video generateVideo() {
+		return new Video();
+	}
+	
+	@Bean
+	@Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public PlayList generatePlayList() {
+		return new PlayList();
 	}
 }

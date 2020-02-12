@@ -53,7 +53,6 @@ public class FilesHandler {
         if(file!=null && file.exists()==true){
             //check if folder
             if(file.isDirectory()==true){
-                System.out.println("Recursive Directory!!!");
                //get children
                 Observable.fromArray(file.listFiles()).subscribeOn(Schedulers.io())
                     .blockingSubscribe(f->{
