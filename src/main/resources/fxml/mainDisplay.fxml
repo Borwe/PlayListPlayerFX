@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
@@ -22,9 +23,12 @@
       <HBox alignment="BOTTOM_RIGHT" BorderPane.alignment="BOTTOM_RIGHT">
          <children>
             <Separator orientation="VERTICAL" />
-            <Label fx:id="loadBarText" text="Loaded" />
+            <Label fx:id="loadBarText" alignment="CENTER" contentDisplay="CENTER" text="Loaded">
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding></Label>
             <Separator orientation="VERTICAL" />
-            <ProgressBar fx:id="loadBar" prefWidth="200.0" progress="0.0" />
+            <ProgressBar fx:id="loadBar" prefWidth="0.0" visible="false" />
          </children>
       </HBox>
    </bottom>

@@ -3,11 +3,14 @@ package com.borwe.playlistPlayerFx;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 
+import com.borwe.playlistPlayerFx.fx.FXCompletableGenerator;
 import com.borwe.playlistPlayerFx.fx.MainFXController;
 import com.borwe.playlistPlayerFx.fx.functions.GenerateHelperView;
 import com.borwe.playlistPlayerFx.springConfigs.MainConfig;
 import com.borwe.playlistPlayerFx.springServices.PlayListService;
 
+import io.reactivex.Observable;
+import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lombok.Getter;
 
 public class Application extends javafx.application.Application{
 
@@ -22,10 +26,14 @@ public class Application extends javafx.application.Application{
 	
 	private static Window parentWindow;
 	
+	private static String[] args;
+	
+	@Getter
+	private static Parent parent;
+	
 	public static void main(String[] args) {
-		context= SpringApplication.run(MainConfig.class, args);
+		Application.args=args;
 		launch(args);
-		System.out.println("YOLO BITCHES");
 	}
 
 	@Override
@@ -33,7 +41,7 @@ public class Application extends javafx.application.Application{
 		primaryStage.setTitle("PlayListPlayerFX - A Media Playlist player");
 		
 		//load from mainDisplay as view
-		Parent parent=FXMLLoader.load(this.getClass().getResource("/fxml/mainDisplay.fxml"));
+		parent=FXMLLoader.load(this.getClass().getResource("/fxml/mainDisplay.fxml"));
 		Scene scene=new Scene(parent);
 		
 		primaryStage.setScene(scene);
@@ -45,21 +53,37 @@ public class Application extends javafx.application.Application{
 		/*
 		 * once shown now go ahead and start display help page if no playlists
 		 * otherwise go ahead and populate the views with playlists
+		 * Also, generate access to spring boot context to be used later
 		 */
 		primaryStage.setOnShown(event->{
-			var playlistService=Application.getApplicationContext().getBean(PlayListService.class);
-			playlistService.thereIsPlayList().map(val->{
-				if(val==false) {
-					Thread.sleep(1000);
-				    new GenerateHelperView<Void>().accept(null);
-				}
-				return val;
-			}).observeOn(Schedulers.computation())
-				.subscribe(val->{
-					System.out.println("SHIT:   "+val);
-				},err->{
-					System.err.println("ERROR: "+err);
+			
+			
+			//the spring boot background observable to be used
+			var springBootBackground=Observable.just(true)
+					.map(val->{
+						
+						Application.context= SpringApplication.run(MainConfig.class, Application.args);
+						return true;
+					}).flatMap(cont->{
+						//for getting playlists
+						return Application.getApplicationContext()
+								.getBean(PlayListService.class).thereIsPlayList().map(val->{
+							if(val==false) {
+								Thread.sleep(1000);
+								new GenerateHelperView<Void>().accept(null);
+							}
+							return val;
+						}).toObservable();
+					})
+					.observeOn(Schedulers.computation());
+			FXCompletableGenerator.generateCompletable("Starting Up", springBootBackground)
+				.subscribe(()-> {
+					// TODO Auto-generated method stub
+					System.out.println("COMPLETED THIS BITCH");
 				});
+			
+			
+			
 		});
 
 		primaryStage.show();

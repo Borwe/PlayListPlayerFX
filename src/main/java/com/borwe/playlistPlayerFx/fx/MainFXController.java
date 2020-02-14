@@ -11,12 +11,17 @@ import com.borwe.playlistPlayerFx.fx.functions.GenerateHelperView;
 import com.borwe.playlistPlayerFx.fx.functions.GenerateTypesView;
 import com.borwe.playlistPlayerFx.springServices.PlayListService;
 
+import io.reactivex.Completable;
 import io.reactivex.schedulers.Schedulers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressBar;
+import lombok.Getter;
+import lombok.Setter;
 
 public class MainFXController implements Initializable{
 
@@ -25,6 +30,14 @@ public class MainFXController implements Initializable{
 	
 	@FXML
 	MenuItem menu_help;
+	
+	@FXML
+    @Getter
+	private static Label loadBarText;
+	
+	@FXML 
+    @Getter
+	private static ProgressBar loadBar;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
