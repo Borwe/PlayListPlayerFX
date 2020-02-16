@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 
 import com.borwe.playlistPlayerFx.fx.FXCompletableGenerator;
+import com.borwe.playlistPlayerFx.fx.FXRunnable;
 import com.borwe.playlistPlayerFx.fx.MainFXController;
 import com.borwe.playlistPlayerFx.fx.functions.GenerateHelperView;
 import com.borwe.playlistPlayerFx.springConfigs.MainConfig;
@@ -15,6 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuBar;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -63,6 +65,14 @@ public class Application extends javafx.application.Application{
 					.map(val->{
 						
 						Application.context= SpringApplication.run(MainConfig.class, Application.args);
+						//enable the menus after we reach here
+						FXRunnable runnable=()->{
+							Parent parent=Application.getParent();
+							MenuBar menuBar=(MenuBar) parent.lookup("#menuBar");
+							//set it to enabled
+							menuBar.setDisable(false);
+						};
+						FXCompletableGenerator.doOnUI(runnable);
 						return true;
 					}).flatMap(cont->{
 						//for getting playlists
@@ -91,6 +101,9 @@ public class Application extends javafx.application.Application{
 
 	
 	public static ApplicationContext getApplicationContext() {
+		if(context==null) {
+			throw new NullPointerException("Sorry, no context loaded, wait for application to fully load");
+		}
 		return context;
 	}
 	

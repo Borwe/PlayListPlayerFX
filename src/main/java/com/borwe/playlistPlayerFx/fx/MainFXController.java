@@ -18,12 +18,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import lombok.Getter;
 import lombok.Setter;
 
 public class MainFXController implements Initializable{
+	
+	@FXML
+	MenuBar menuBar;
 
 	@FXML
 	MenuItem menu_exit;
