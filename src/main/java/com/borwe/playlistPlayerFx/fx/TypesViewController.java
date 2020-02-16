@@ -42,20 +42,34 @@ public class TypesViewController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		loaded=true;
 		
-		fillInListViewObservable=Application.getApplicationContext().getBean(TypeService.class)
+		fillInListViewObservable=Single.defer(()->Application.getApplicationContext().getBean(TypeService.class)
 			.getAlltypes().map(type->{
 				System.out.println("TYPE: "+type);
 				return type.getType();
 			}).toList().map(list->{
-				while(typesList==null) {
-					Thread.sleep(500);
-				}
-				typesList.getItems().addAll(list);
-				typesList.refresh();
-				return typesList;
-			});
+							
+				System.out.println("UPDATE UI");
+				FXRunnable updateUIWithTypes=()->{
+					
+					while(typesList==null) {
+						try {
+							System.out.println("HEY WHAT THE FUCK?");
+							Thread.currentThread().sleep(500);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					typesList.getItems().addAll(list);
+					typesList.refresh();
+				};
+					
+				FXCompletableGenerator.doOnUI(updateUIWithTypes);
 				
-		fillInListViewObservable.map(typeList->{
+				return typesList;
+			}));
+				
+		var enableTypeRemovalButton=fillInListViewObservable.map(typeList->{
 				//set listener to enable disable removeType button
 				var removeEnabler=new EventHandler<Event>() {
 
@@ -64,16 +78,21 @@ public class TypesViewController implements Initializable{
 						// TODO Auto-generated method stub
 						var selection=typesList.getSelectionModel();
 						if(selection.isEmpty()==true) {
-							removeType.setDisable(true);
+							FXRunnable disable=()->removeType.setDisable(true);
+							FXCompletableGenerator.doOnUI(disable);
 						}else {
-							removeType.setDisable(false);
+							FXRunnable enable=()->removeType.setDisable(false);
+							FXCompletableGenerator.doOnUI(enable);
 						}
 					}
 				};
 				typesList.setOnMouseClicked(removeEnabler);
 				typesList.setOnKeyPressed(removeEnabler);
 				return typesList;
-		}).subscribe();
+		}).toObservable();
+		
+		FXCompletableGenerator.generateCompletable("Enable/Disable Button", enableTypeRemovalButton)
+		.subscribe();
 	}
 
 	public void exitTypes(ActionEvent event) {
@@ -87,17 +106,22 @@ public class TypesViewController implements Initializable{
 		}).map(item->{
 			return new Type(0L, (String)item);
 		});
-		Application.getApplicationContext().getBean(TypeService.class)
-			.removeTypes(getType).subscribe(success->{
+		var removeTypeObserver=Application.getApplicationContext().getBean(TypeService.class)
+			.removeTypes(getType).filter(success->{
 				if(success==true) {
-					//clear list
-					typesList.getItems().clear();
+					FXRunnable runnable=()->{
+						//clear list
+						typesList.getItems().clear();
+						//disable remove button
+						removeType.setDisable(true);
+					};
+					FXCompletableGenerator.doOnUI(runnable);
 					fillInListViewObservable.subscribe();
 				}
-			},error->{
-				System.err.println(error.getMessage());
-				System.err.println(error.getCause());
+				return success;
 			});
+		FXCompletableGenerator.generateCompletable("Remvoing element", removeTypeObserver.toObservable())
+			.subscribe();
 	}
 	
 	public void addType(ActionEvent event) {
