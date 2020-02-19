@@ -12,6 +12,7 @@ import com.borwe.playlistPlayerFx.data.MultiMedia;
 import com.borwe.playlistPlayerFx.data.PlayList;
 import com.borwe.playlistPlayerFx.data.Type;
 import com.borwe.playlistPlayerFx.data.Video;
+import com.borwe.playlistPlayerFx.thirdobjects.MuttableString;
 
 /**
  * 
@@ -48,4 +49,10 @@ public class DataConfigs {
 	public PlayList generatePlayList() {
 		return new PlayList();
 	}
+
+    @Bean
+    @Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public MuttableString getMutableString(){
+        return new MuttableString();
+    }
 }

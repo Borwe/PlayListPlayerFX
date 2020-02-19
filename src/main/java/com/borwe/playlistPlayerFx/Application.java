@@ -87,7 +87,7 @@ public class Application extends javafx.application.Application{
 					})
 					.observeOn(Schedulers.computation());
 			FXCompletableGenerator.generateCompletable("Starting Up", springBootBackground)
-				.subscribe(()-> {
+				.subscribe(val-> {
 					// TODO Auto-generated method stub
 					System.out.println("COMPLETED THIS BITCH");
 				});

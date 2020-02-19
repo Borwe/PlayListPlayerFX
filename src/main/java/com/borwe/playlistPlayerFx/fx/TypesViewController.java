@@ -2,12 +2,16 @@ package com.borwe.playlistPlayerFx.fx;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.borwe.playlistPlayerFx.Application;
 import com.borwe.playlistPlayerFx.data.Type;
 import com.borwe.playlistPlayerFx.springServices.TypeService;
+import com.borwe.playlistPlayerFx.thirdobjects.MuttableString;
 
-import io.reactivex.Observable;
+import io.reactivex.MaybeSource;
 import io.reactivex.Single;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -18,7 +22,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
@@ -125,59 +128,82 @@ public class TypesViewController implements Initializable{
 	}
 	
 	public void addType(ActionEvent event) {
-		TextInputDialog textInput=new TextInputDialog();
-		textInput.setTitle("Enter Multimedia Type Extention");
-		textInput.showAndWait();
+		MuttableString typeInput=Application.getApplicationContext().getBean(MuttableString.class);
 		
-		String typeInput=textInput.getResult();
-		
-		//check if user gave any valid input
-		var validInput=Single.just(typeInput).map(input->{
+		Single<Boolean> addingTYpeObservable=Single.just(typeInput).map(input->{
+            ReentrantLock lock=new ReentrantLock(true);
+			FXRunnable getVals=()->{
+				TextInputDialog textInput=new TextInputDialog();
+				textInput.setTitle("Enter Multimedia Type Extention");
+				textInput.setContentText("Enter value, eg MP3 for mp3");
+				textInput.showAndWait();
+                String result=textInput.getResult();
+                System.out.println("result: "+result);
+				//since rxjava creates new objects
+                typeInput.setString(result);
+                System.out.println("TYPE INPUT: "+typeInput);
+			};
+
+			
+			FXCompletableGenerator.doOnUI(getVals,lock);
+			//now wait for lock before going ahead
+            lock.lock();
+            System.out.println("VALUE: "+typeInput);
+			return typeInput;
+		}).map(input->{
+            System.out.println("VALUE: "+input);
 			if(input!=null&& input.isEmpty()==false) {
 				return true;
 			}
 			return false;
-		});
-		validInput.subscribe(success->{
+		}).map(success->{
+            ReentrantLock lock=new ReentrantLock(true);
 			if(success==false) {
-				Dialog<Void> dialog=new Dialog<Void>();
-				ButtonType okButton=new ButtonType("OK", ButtonData.OK_DONE);
-				dialog.getDialogPane().getButtonTypes().add(okButton);
-				dialog.getDialogPane().setHeaderText("Please enter valid type");
-				dialog.getDialogPane().setContentText("The value given was not valid");
-				dialog.setTitle("Warning");
-				dialog.showAndWait();
+				//give warning
+				FXRunnable runnable=()->{
+					Dialog<Void> dialog=new Dialog<Void>();
+					ButtonType okButton=new ButtonType("OK", ButtonData.OK_DONE);
+					dialog.getDialogPane().getButtonTypes().add(okButton);
+					dialog.getDialogPane().setHeaderText("Please enter valid type");
+					dialog.getDialogPane().setContentText("The value given was not valid");
+					dialog.setTitle("Warning");
+					dialog.showAndWait();
+				};
+				FXCompletableGenerator.doOnUI(runnable,lock);
 			}
-		});
-		
-		validInput.toObservable()
-		.filter(success->success)	
-		.flatMap(valid->{
-			if(valid==true) {
-				//create a new type of given input
-				Type type=Application.getApplicationContext().getBean(Type.class);
-				type.setType(typeInput);
-				return Application.getApplicationContext().getBean(TypeService.class).addType(type).toObservable();
-			}
-			return null;
-		}).firstOrError().subscribe(success->{
+			//wait until warning has been displayed then go ahead, if it was displayed,
+			//otherwise just go on ahead
+            lock.lock();
+			return success;
+		}).filter(success->success).flatMap(valid->{
+			//create a new type of given input
+			Type type=Application.getApplicationContext().getBean(Type.class);
+			type.setType(typeInput.getString());
+			return (MaybeSource<? extends Boolean>) Application.getApplicationContext().getBean(TypeService.class).addType(type);
+		}).toSingle().map(success->{
 			if(success!=null && success==false) {
 				//prompt user than type already existed
-				Dialog<Void> dialog=new Dialog<Void>();
-				ButtonType okButton=new ButtonType("OK", ButtonData.OK_DONE);
-				dialog.setTitle("Type already exists");
-				dialog.setHeaderText("Data type exists");
-				dialog.setContentText("The data type given, is already listed");
-				dialog.getDialogPane().getButtonTypes()
-					.add(okButton);
-				dialog.showAndWait();
+				FXRunnable runnable=()->{
+					Dialog<Void> dialog=new Dialog<Void>();
+					ButtonType okButton=new ButtonType("OK", ButtonData.OK_DONE);
+					dialog.setTitle("Type already exists");
+					dialog.setHeaderText("Data type exists");
+					dialog.setContentText("The data type given, is already listed");
+					dialog.getDialogPane().getButtonTypes()
+						.add(okButton);
+					dialog.showAndWait();
+				};
+				FXCompletableGenerator.doOnUI(runnable);
 			}else {
 				//clear the typesList, and then repopulate it
 				typesList.getItems().clear();
 				fillInListViewObservable.subscribe();
 			}
-		},error->{
-			System.err.println("ERROR: "+error.getMessage());
+			return success;
 		});
+		
+		FXCompletableGenerator
+			.generateCompletable("Adding type", addingTYpeObservable)
+			.subscribe(System.out::println,System.err::println);
 	}
 }
