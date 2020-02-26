@@ -30,6 +30,10 @@ public class MuttableString{
         lock.readLock().unlock();
         return toReturn;
     }
+    
+    public void strip() {
+    	this.string=string.strip();
+    }
 
     public String toString(){
         return getString();

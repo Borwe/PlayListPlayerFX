@@ -148,6 +148,7 @@ public class TypesViewController implements Initializable{
 			FXCompletableGenerator.doOnUI(getVals,lock);
 			//now wait for lock before going ahead
             lock.lock();
+            typeInput.strip();
             System.out.println("VALUE: "+typeInput);
 			return typeInput;
 		}).map(input->{
@@ -179,7 +180,7 @@ public class TypesViewController implements Initializable{
 			//create a new type of given input
 			Type type=Application.getApplicationContext().getBean(Type.class);
 			type.setType(typeInput.getString());
-			return (MaybeSource<? extends Boolean>) Application.getApplicationContext().getBean(TypeService.class).addType(type);
+			return Application.getApplicationContext().getBean(TypeService.class).addType(type).toMaybe();
 		}).toSingle().map(success->{
 			if(success!=null && success==false) {
 				//prompt user than type already existed
