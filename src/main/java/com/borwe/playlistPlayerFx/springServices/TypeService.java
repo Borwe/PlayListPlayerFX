@@ -62,6 +62,24 @@ public class TypeService{
     }
     
     /**
+     * Get types  as strings in small
+     * @return
+     */
+    public Observable<String> getTypesAsSmallString(){
+    	return getAlltypes().map(type->{
+    		return type.getType().toLowerCase();
+    	});
+    }
+    
+    /**
+     * Get types as string in large
+     * @return
+     */
+    public Observable<String> getTypesAsLargString() {
+    	return getTypesAsSmallString().map(type->type.toUpperCase());
+    }
+    
+    /**
      * Used for adding Types to the database
      * reactively
      * @param type

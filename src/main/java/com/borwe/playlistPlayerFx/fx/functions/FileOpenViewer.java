@@ -32,6 +32,10 @@ import javafx.scene.control.TextInputDialog;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Window;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 public class FileOpenViewer<T extends Window> implements Consumer<T>{
 
@@ -52,33 +56,44 @@ public class FileOpenViewer<T extends Window> implements Consumer<T>{
 	@Override
 	public void accept(T window) {
 		
-		getFolderSelected(window).subscribeOn(Schedulers.computation()).subscribe();
-//		DirectoryChooser fileChooser=new DirectoryChooser();
-//        //get types to be allowed into file chooser
-//        var typesListObserver= Application.getApplicationContext().getBean(TypeService.class)
-//            .getAlltypes().map(type->type.getType().toLowerCase());
+		getFolderSelected(window).subscribeOn(Schedulers.computation())
+			//filter to make on selected valid folders
+			.filter(file->{
+				if(file==null || file.exists()==false) {
+					System.out.println("You didn't select a file");
+					return false;
+				}
+				
+				//if empty return false, but also display warning
+				boolean empty=Application.getApplicationContext().getBean(FilesHandler.class)
+					.getFilesInDirectory(file.getAbsolutePath()).isEmpty().blockingGet();
+				if(empty==true) {
+					FXRunnable runner=()->{
+						
+						System.out.println("SHIT COME ON\n\n\n");
+						ButtonType okButton=new ButtonType("OK");
+						Dialog<Void> noFilesDialog=new Dialog<Void>();
+						noFilesDialog.getDialogPane().getButtonTypes().add(okButton);
+						noFilesDialog.setTitle("Error");
+						noFilesDialog.getDialogPane().setHeaderText("Sorry");
+						noFilesDialog.getDialogPane().setContentText("Please select another folder witch isn't empty");
+						noFilesDialog.initModality(Modality.APPLICATION_MODAL);
+						noFilesDialog.showAndWait();
+						accept(window);
+					};
+					FXCompletableGenerator.doOnUI(runner);
+					return false;
+				}
+				return true;
+			})
+			.subscribe();
 //
-//        //open file chooser and listen for a returning
-//        fileChooser.setTitle("Select a folder containing files to play");
-//        File file=fileChooser.showDialog(window);
-//
-//        //check that file exists, otherwise user didn't select any
-//        if(file!=null && file.exists() && file.isDirectory()){
 //            //continue here to parse files in the folder
 //            var filesObserver=Application.getApplicationContext().getBean(FilesHandler.class)
 //                .getFilesInDirectory(file.getAbsolutePath());
 //            
 //            //check if files is empty, if so stop and don't go ahead, show error message
 //            if(filesObserver.isEmpty().blockingGet()) {
-//            	ButtonType okButton=new ButtonType("OK");
-//            	Dialog<Void> noFilesDialog=new Dialog<Void>();
-//            	noFilesDialog.getDialogPane().getButtonTypes().add(okButton);
-//            	noFilesDialog.setTitle("Error");
-//            	noFilesDialog.getDialogPane().setHeaderText("Sorry");
-//            	noFilesDialog.getDialogPane().setContentText("Please select another folder with actual files");
-//            	noFilesDialog.initModality(Modality.APPLICATION_MODAL);
-//            	noFilesDialog.showAndWait();
-//            	accept(window);
 //            	return;
 //            }else {
 //            	//meaning that files actually exist, then go ahead and filter only
@@ -176,10 +191,6 @@ public class FileOpenViewer<T extends Window> implements Consumer<T>{
 //									});
 //							}
 //            			});
-//            		}else {
-//            			//some shit went wrong
-//            			System.out.println("WHAT THE FUCK? COME ON!!!!!!!!!!!!!");
-//            		}
 //            	},error->{
 //            		System.err.println("ERROR: "+error.getCause());
 //            		System.err.println("ERROR SUBSCRIBE: "+error.getLocalizedMessage());
@@ -197,15 +208,32 @@ public class FileOpenViewer<T extends Window> implements Consumer<T>{
 				ReentrantLock lock=new ReentrantLock(true);
 				
 				DirectoryChooser fileChooser=new DirectoryChooser();
+				MuteableFile file=new MuteableFile(null);
 				FXRunnable showFileUI=()->{
 				fileChooser.setTitle("Select a folder containing files to play");
-				fileChooser.showDialog(window);
+				
+				file.setFile(fileChooser.showDialog(window));
 				};
 				FXCompletableGenerator.doOnUI(showFileUI, lock);
 				
+				lock.lock();
+				
 				//open file chooser and listen for a returning
-				return new File("shit.txt");
+				return file.getFile();
 			}
 		));
+	}
+	
+	/**
+	 * 
+	 * @author BRIAN
+	 * Used for dynamically setting a file object
+	 * , good for when using FileChooser/DirectoryChooser.showDialog() in fx
+	 */
+	@AllArgsConstructor
+	@ToString
+	private class MuteableFile{
+		@Getter @Setter
+		private File file;
 	}
 }
