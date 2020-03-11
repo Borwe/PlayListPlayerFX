@@ -33,6 +33,8 @@ javafx {
 }
 
 dependencies {
+	implementation 'org.apache.derby:derbyclient:10.14.2.0'
+
 	//vlcj for playing with vlc
 	implementation 'uk.co.caprica:vlcj:4.2.0'
 	

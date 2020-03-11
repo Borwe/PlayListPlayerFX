@@ -197,7 +197,10 @@ public class TypesViewController implements Initializable{
 				FXCompletableGenerator.doOnUI(runnable);
 			}else {
 				//clear the typesList, and then repopulate it
-				typesList.getItems().clear();
+				FXRunnable runnable=()->{
+					typesList.getItems().clear();
+				};
+				FXCompletableGenerator.doOnUI(runnable);
 				fillInListViewObservable.subscribe();
 			}
 			return success;

@@ -1,14 +1,16 @@
 package com.borwe.playlistPlayerFx.springServices;
 
-import com.borwe.playlistPlayerFx.data.Type;
-import com.borwe.playlistPlayerFx.data.repos.TypeRepo;
+import java.io.File;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.borwe.playlistPlayerFx.data.Type;
+import com.borwe.playlistPlayerFx.data.repos.TypeRepo;
+
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.Single;
 import lombok.ToString;
 
@@ -59,6 +61,52 @@ public class TypeService{
 				}).flatMap(typesIterable->{
 					return Observable.fromIterable(typesIterable);
 				}));
+    }
+    
+    /**
+     * Used for checking for getting extention
+     * type of a file
+     * @param file
+     * @return
+     */
+    public Maybe<Type> getTypeFromFile(File file){
+    	return Maybe.defer(()->Maybe.create((emitter)->{
+    		try {
+    			
+				String extention=file.getName().toLowerCase().replace(".", " ").split(" ")[1];
+				getAlltypes()
+					.filter(t->t.getType().equals(extention)?true:false)
+					.forEach(t->emitter.onSuccess(t));
+    		}catch(Exception ex) {
+    			
+    		}
+    		
+    		emitter.onComplete();
+    	}));
+    }
+    
+    /**
+     * Used for checking a file has an extention
+     * supported by the user or not
+     * @param file
+     * @return
+     */
+    public Single<Boolean> checkIfFileContainsUserType(File file){
+    	return Single.defer(()->Single.just(file)
+    			.map(f->{
+	            		try {
+							String extention=file.getName().toLowerCase().replace(".", " ").split(" ")[1];
+							
+							if(getTypesAsSmallString().contains(extention).blockingGet()) {
+								return true;
+							}else {
+								return false;
+							}
+	            		}catch (Exception e) {
+	            			e.printStackTrace();
+	            			return false;
+						}
+    	}));
     }
     
     /**
