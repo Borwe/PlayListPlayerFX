@@ -3,6 +3,7 @@ package com.borwe.playlistPlayerFx.fx.functions;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
@@ -17,6 +18,7 @@ import com.borwe.playlistPlayerFx.springServices.MultiMediaService;
 import com.borwe.playlistPlayerFx.springServices.PlayListService;
 import com.borwe.playlistPlayerFx.springServices.TypeService;
 import com.borwe.playlistPlayerFx.springServices.VideoService;
+import com.borwe.playlistPlayerFx.thirdobjects.MuttableString;
 
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
@@ -132,39 +134,51 @@ public class FileOpenViewer<T extends Window> implements Consumer<T>{
 			}).observeOn(Schedulers.io())
 			.subscribe(playlist->{
 				//prompt user to give playlist a name if playlist not null
-				if(playlist!=null) {
-					ReentrantLock lock=new ReentrantLock();
-					TextInputDialog dialog=new TextInputDialog();
-					
-					FXRunnable runnable=()->{
-						dialog.setHeaderText("Input");
-						dialog.setContentText("Enter name of the playlist");
-						dialog.initModality(Modality.APPLICATION_MODAL);
-						dialog.showAndWait();
-						
-					};
-					
-					FXCompletableGenerator.doOnUI(runnable, lock);
-					
-					//wait for user to select something before proceeding here
-					lock.lock();
-					String result=dialog.getResult();
-					//check that it's not null, and that it exists, then set the value of playlist 
-					//and save it asyncronously
-					if(result!=null && result.isEmpty()==false) {
-						playlist.setName(result);
-						Application.getApplicationContext().getBean(PlayListService.class)
-							.savePlayList(playlist).subscribeOn(Schedulers.io()).subscribe(pl->{
-								System.out.println("DONE SAVING PLAY LIST");
-							});
-					}
-				}
+				promptForPlaylistName(playlist);
 			},error->{
 				System.err.println("ERROR: "+error.getCause());
 				System.err.println("ERROR SUBSCRIBE: "+error.getLocalizedMessage());
 			   });
            
     }
+	
+	/**
+	 * Used for saving playlist with a name, will keep prompting user untill they
+	 * select a playlist that is valid
+	 * @param playlist
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	private void promptForPlaylistName(PlayList playlist) throws InterruptedException, ExecutionException {
+	
+			if(playlist!=null) {
+				ReentrantLock lock=new ReentrantLock();
+				MuttableString result=new MuttableString();
+				
+				FXRunnable runnable=()->{
+					TextInputDialog dialog=new TextInputDialog();
+					dialog.setHeaderText("Input");
+					dialog.setContentText("Enter name of the playlist");
+					dialog.initModality(Modality.APPLICATION_MODAL);
+					dialog.showAndWait();
+					result.setString(dialog.getResult());
+				};
+				
+				FXCompletableGenerator.doOnUI(runnable, lock);
+				
+				//wait for user to select something before proceeding here
+				lock.lock();
+				//check that it's not null, and that it exists, then set the value of playlist 
+				//and save it asyncronously
+				if(!result.isNull() && result.isEmpty()==false) {
+					playlist.setName(result.getString());
+					Application.getApplicationContext().getBean(PlayListService.class)
+						.savePlayList(playlist).subscribeOn(Schedulers.io()).subscribe(pl->{
+							System.out.println("DONE SAVING PLAY LIST");
+						});
+				}
+			}
+	}
 	
 	private Single<File> getFolderSelected(T window){
 		return Single.defer(()->Single.just(window)

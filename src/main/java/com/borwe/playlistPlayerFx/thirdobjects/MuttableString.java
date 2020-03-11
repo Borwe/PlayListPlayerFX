@@ -42,4 +42,8 @@ public class MuttableString{
 	public boolean isEmpty() {
 		return getString().isEmpty();
 	}
+	
+	public boolean isNull() {
+		return getString()==null;
+	}
 }

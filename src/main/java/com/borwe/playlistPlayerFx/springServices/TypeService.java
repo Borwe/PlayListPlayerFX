@@ -95,8 +95,18 @@ public class TypeService{
     	return Single.defer(()->Single.just(file)
     			.map(f->{
 	            		try {
-							String extention=file.getName().toLowerCase().replace(".", " ").split(" ")[1];
-							
+	            			
+	            			String fileName=file.getName();
+	            			//check if file has an extention, if not, return false
+	            			if(fileName.contains(".")==false) {
+	            				return false;
+	            			}
+	            			
+	            			//otherwise get extention
+	            			String extention=fileName.substring(fileName.lastIndexOf(".")+1);
+	            			
+//							String extention=file.getName().toLowerCase().replace(".", " ").split(" ")[1];
+//							
 							if(getTypesAsSmallString().contains(extention).blockingGet()) {
 								return true;
 							}else {
