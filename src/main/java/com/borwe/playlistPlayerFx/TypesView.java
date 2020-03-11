@@ -18,6 +18,8 @@ public class TypesView {
 		primaryStage.setScene(scene);
 		primaryStage.setMinWidth(300);
 		primaryStage.setMinHeight(300);
+		primaryStage.setMaxWidth(350);
+		primaryStage.setMaxHeight(350);
 
 		primaryStage.showAndWait();
 	}
