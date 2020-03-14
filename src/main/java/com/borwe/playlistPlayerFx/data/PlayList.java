@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,5 +45,13 @@ public class PlayList {
 	/**
 	 * Mark time video was last played
 	 */
+	@Column
 	private Long time;
+	
+	/**
+	 * Will be false if the playlist actually contains no videos/multimedia
+	 * true otherwise, has to be true before being saved to DB
+	 */
+	@Transient
+	private boolean isValid;
 }

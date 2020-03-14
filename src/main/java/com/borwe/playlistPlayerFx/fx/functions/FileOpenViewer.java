@@ -22,6 +22,8 @@ import com.borwe.playlistPlayerFx.thirdobjects.MuttableString;
 
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextInputDialog;
@@ -119,39 +121,49 @@ public class FileOpenViewer<T extends Window> implements Consumer<T>{
 					}).toList().map(vids->{
 	            		//map video to playlist
 	            		PlayList playlist=Application.getApplicationContext().getBean(PlayList.class);
-	            		playlist.setLocation(new File(vids.get(0).getLocation()).getParentFile().getAbsolutePath());
-	            		playlist.setTime(System.currentTimeMillis());
-	            		System.out.println("DEVELOPING SHIT");
-	            		
-	            		List<MultiMedia> medias=new ArrayList<MultiMedia>();
-	            		playlist.setMarkMultiMediaAccess(medias);
-	            		
-	            		vids.forEach(v->{
-	            			playlist.getMarkMultiMediaAccess().add(v.getMultiMedia());
-	            		});
-	            		return playlist;
+	            		if(vids.isEmpty()) {
+	            			//meaning no actual videos to append to playlist, the set validity to false
+	            			playlist.setValid(false);
+	            		}else {
+	            			
+							playlist.setLocation(new File(vids.get(0).getLocation()).getParentFile().getAbsolutePath());
+							playlist.setTime(System.currentTimeMillis());
+							System.out.println("DEVELOPING SHIT");
+							
+							List<MultiMedia> medias=new ArrayList<MultiMedia>();
+							playlist.setMarkMultiMediaAccess(medias);
+							
+							vids.forEach(v->{
+								playlist.getMarkMultiMediaAccess().add(v.getMultiMedia());
+							});
+							playlist.setValid(true);
+						}
+						return playlist;
 					});
 			}).observeOn(Schedulers.io())
 			.subscribe(playlist->{
 				//prompt user to give playlist a name if playlist not null
 				promptForPlaylistName(playlist);
-			},error->{
+			}/*,error->{
 				System.err.println("ERROR: "+error.getCause());
 				System.err.println("ERROR SUBSCRIBE: "+error.getLocalizedMessage());
-			   });
+			   }*/);
            
     }
 	
 	/**
 	 * Used for saving playlist with a name, will keep prompting user untill they
-	 * select a playlist that is valid
+	 * select a playlist name that is valid, otherwise keep failing
+	 * and keep relooping.
+	 * - There is a cancel option that will undo the whole process clearing any files saved, etc.
 	 * @param playlist
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
 	private void promptForPlaylistName(PlayList playlist) throws InterruptedException, ExecutionException {
 	
-			if(playlist!=null) {
+			//make sure playlist is not null, and is actually a valid input
+			if(playlist!=null && playlist.isValid()) {
 				ReentrantLock lock=new ReentrantLock();
 				MuttableString result=new MuttableString();
 				
@@ -170,13 +182,22 @@ public class FileOpenViewer<T extends Window> implements Consumer<T>{
 				lock.lock();
 				//check that it's not null, and that it exists, then set the value of playlist 
 				//and save it asyncronously
-				if(!result.isNull() && result.isEmpty()==false) {
+				if(!result.isNull() && !result.isEmpty()) {
 					playlist.setName(result.getString());
 					Application.getApplicationContext().getBean(PlayListService.class)
 						.savePlayList(playlist).subscribeOn(Schedulers.io()).subscribe(pl->{
+							//inform user that the selected playlist was saved
+							FXCompletableGenerator.doOnUI(()->{
+								Alert alert=new Alert(AlertType.INFORMATION, "Playlist Saved",
+										new ButtonType("OK"));
+								alert.showAndWait();
+							});
 							System.out.println("DONE SAVING PLAY LIST");
 						});
 				}
+			}else {
+				//PROMPT that no video was found here since playlist is not valid
+				System.out.println("NO VIDEO WAS FOUND");
 			}
 	}
 	

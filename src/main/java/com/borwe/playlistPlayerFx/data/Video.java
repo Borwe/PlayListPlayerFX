@@ -25,7 +25,7 @@ public class Video {
 	/** 
 	 * Video can have a type, but not a must
 	 */
-	@OneToOne
+	@OneToOne(optional = true)
 	private Type type;
 	
 	/**
