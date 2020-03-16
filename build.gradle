@@ -61,6 +61,18 @@ dependencies {
 	}
 }
 
+run{
+	doFirst{
+		if(System.getProperty("os.name").equals("Linux")){
+			System.out.println(">Running on linux");
+			getJvmArgs().add("jdk.gtk.version=2");
+		}
+
+	}
+
+}
+
+
 test {
 	useJUnitPlatform()
 }
